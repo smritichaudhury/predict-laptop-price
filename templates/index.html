@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Laptop Price Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f0f8ff;
+            color: #333;
+            font-family: Arial, sans-serif;
+        }
+        .navbar {
+            background-color: #007bff;
+            color: white;
+        }
+        .navbar-brand, .nav-link {
+            color: white !important;
+        }
+        .form-container {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 50px auto;
+        }
+        .btn-primary {
+            background-color: #007bff;
+            border: none;
+        }
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Laptop Price Predictor</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="form-container">
+        <h3 class="text-center">Enter Laptop Specifications</h3>
+        <form method="POST" action="/predict">
+            <div class="mb-3">
+                <label for="processor" class="form-label">Processor Brand</label>
+                <select class="form-select" id="processor" name="processor">
+                    <option value="intel">Intel</option>
+                    <option value="amd">AMD</option>
+                    <option value="apple">Apple</option>
+                    <option value="mediatek">MediaTek</option>
+                    <option value="qualcomm">Qualcomm</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="ram_expandable" class="form-label">RAM Expandable (in GB)</label>
+                <input type="number" step="1" min="1" class="form-control" id="ram_expandable" name="ram_expandable" required>
+            </div>
+            <div class="mb-3">
+                <label for="ram" class="form-label">RAM (in GB)</label>
+                <input type="number" step="1" min="1" class="form-control" id="ram" name="ram" required>
+            </div>
+            <div class="mb-3">
+                <label for="ram_type" class="form-label">RAM Type</label>
+                <select class="form-select" id="ram_type" name="ram_type">
+                    <option value="ddr4">DDR4</option>
+                    <option value="ddr5">DDR5</option>
+                    <option value="lpddr5">LPDDR5</option>
+                    <option value="lpddr4x">LPDDR4X</option>
+                    <option value="ddr3">DDR3</option>
+                    <option value="lpddr5x">LPDDR5X</option>
+                    <option value="lpddr3">LPDDR3</option>
+                    <option value="lpddr4">LPDDR4</option>
+                    <option value="unified">UNIFIED</option>
+                    <option value="ddr2">DDR2</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="ghz" class="form-label">Processor Speed (GHz)</label>
+                <input type="number" step="0.1" min="0.1" class="form-control" id="ghz" name="ghz" required>
+            </div>
+            <div class="mb-3">
+                <label for="display_type" class="form-label">Display Type</label>
+                <select class="form-select" id="display_type" name="display_type">
+                    <option value="lcd">LCD</option>
+                    <option value="led">LED</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="display" class="form-label">Display Size (in inches)</label>
+                <input type="number" step="0.1" min="0.1" class="form-control" id="display" name="display" required>
+            </div>
+            <div class="mb-3">
+                <label for="gpu_brand" class="form-label">GPU Brand</label>
+                <select class="form-select" id="gpu_brand" name="gpu_brand">
+                    <option value="intel">Intel</option>
+                    <option value="nvidia">NVIDIA</option>
+                    <option value="amd">AMD</option>
+                    <option value="apple">Apple</option>
+                    <option value="mediatek">MediaTek</option>
+                    <option value="qualcomm">Qualcomm</option>
+                    <option value="arm">ARM</option>
+                    <option value="ati">ATI</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label for="ssd" class="form-label">SSD (in GB)</label>
+                <input type="number" step="1" min="0" class="form-control" id="ssd" name="ssd" required>
+            </div>
+            <div class="mb-3">
+                <label for="hdd" class="form-label">HDD (in GB)</label>
+                <input type="number" step="1" min="0" class="form-control" id="hdd" name="hdd" required>
+            </div>
+            <div class="d-flex justify-content-between">
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="reset" class="btn btn-danger">Reset</button>
+            </div>
+             
+        </form>
+    </div>
+    
+    <div class="container mt-4">
+    {% if prediction %}
+    <div class="alert alert-success text-center" role="alert">
+        <h4 class="alert-heading">Prediction Result</h4>
+        <p>{{ prediction }}</p>
+    </div>
+    {% endif %}
+    
+    {% if error_message %}
+    <div class="alert alert-danger text-center" role="alert">
+        <h4 class="alert-heading">Error</h4>
+        <p>{{ error_message }}</p>
+    </div>
+    {% endif %}
+</div>
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
